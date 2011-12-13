@@ -1,5 +1,7 @@
-var radio=chrome.extension.getBackgroundPage().radio;
-console.log(radio);
+//var radio=chrome.extension.getBackgroundPage().radio;
+var radio=opera.extension.bgProcess.radio
+var doubanfm = opera.extension.bgProcess.doubanfm
+console.log(radio.channel);
 
 function showSong(){
 	var data=radio.c_song;
@@ -31,10 +33,12 @@ $("#power").bind("click",function(){
 	if(radio.power===false){
 		radio.powerOn();
 		$(this).attr("src","img/off.png")
+		$("#pause").show()
 		showSong();
 	}else{
 		radio.powerOff();
 		$(this).attr("src","img/on.png")
+		$("#pause").hide()
 		$("#song_title").html("豆瓣电台")
 		$("#song_title").attr("title","豆瓣电台")
 	}
@@ -75,7 +79,8 @@ $("#range")[0].addEventListener("input",function(){
 	var d=$(this).val()
 	var len=$(this).val()/100*50
 	$("#volume_bar").css("width",len+"px")
-	var a=radio.audio.volume=$(this).val()/100
+	//var a=radio.audio.volume=$(this).val()/100
+	radio.jaudio.jPlayer("volume",$(this).val()/100)
 })
 
 $("#volume img").toggle(function(){
@@ -186,16 +191,18 @@ $("#close_c").bind("click",function(){
 
 
 $("#pause").bind("click",function(){
-	radio.audio.pause()
+	//radio.audio.pause()
+	radio.jaudio.jPlayer("pause")
 	$("#mask").show()
 })
 
 $("#mask").bind("click",function(){
-	radio.audio.play()
+	//radio.audio.play()
+	radio.jaudio.jPlayer("play")
 	$("#mask").hide()
 })
 
-var audio=radio.audio
+/*var audio=radio.audio
 audio.addEventListener("ended",function(){
 	showSong()	
 })
@@ -225,6 +232,36 @@ audio.addEventListener("timeupdate",function(){
 
 })
 
+audio.addEventListener("play",function(){
+})*/
+radio.jaudio.unbind(".douRadio")
+radio.jaudio.bind($.jPlayer.event.timeupdate+'.douRadio', function(event){
+	//var t=(this.currentTime/this.duration)*230
+	var current=radio.jaudio.data("jPlayer").status.currentTime
+	var total=radio.jaudio.data("jPlayer").status.duration
+	var t=(current/total)*230
+	$("#played").css("width",t+"px")
+	var min=0
+	var second=0
+	//var current=this.currentTime
+	min=parseInt(current/60)
+	second=parseInt(current%60)
+	if(second<10){
+		second="0"+second
+	}
+	var c=min+":"+second
+	min=0
+	second=0
+	//total=this.duration
+	min=parseInt(total/60)
+	second=parseInt(total%60)
+	if(second<10){
+		second="0"+second
+	}
+	var t=min+":"+second
+	$("#timer").text(c+"/"+t)
+})
+
 var shares=localStorage["users"]
 if(shares){
 	$.each(shares.split(","),function(index,value){
@@ -235,7 +272,8 @@ if(shares){
 
 if(radio.power){
 	showSong();
-	if(radio.audio.paused){
+	//if(radio.audio.paused){
+	if(radio.jaudio.data("jPlayer").status.paused){
 		$("#mask").show()
 	}
 }

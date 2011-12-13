@@ -1,6 +1,15 @@
-豆瓣电台Google Extension
-\实现功能：歌曲加心、切换歌曲、删除歌曲、歌曲分享到饭否、豆瓣
-TODO：
-  1.实现sina，renren等oauth2认证方式的同步
-  2.实现红心兆赫
+豆瓣电台Opera Extension
+based upon https://github.com/ylm201/douRadio
+
+changelog  -  2011-12-13
+1. Opera的<audio>标签不支持mp3格式，改用jPlayer库
+2. 增加index.js，用于后台播放
+3. off状态不显示暂停按钮
+
+***  Orginal README  ***
+    "豆瓣电台Google Extension
+	\实现功能：歌曲加心、切换歌曲、删除歌曲、歌曲分享到饭否、豆瓣
+	TODO：
+	  1.实现sina，renren等oauth2认证方式的同步
+	  2.实现红心兆赫"
 
