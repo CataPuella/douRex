@@ -1,6 +1,5 @@
 //var radio=chrome.extension.getBackgroundPage().radio;
 var radio=opera.extension.bgProcess.radio
-var doubanfm = opera.extension.bgProcess.doubanfm
 console.log(radio.channel);
 
 function showSong(){
@@ -12,8 +11,10 @@ function showSong(){
 	}
 	if(radio.power==true){
 		$("#power").attr("src","img/off.png")
+		$("#pause").show()
 	}else{
 		$("#power").attr("src","img/on.png")
+		$("#pause").hide()
 	}
 	if(data.title){
 		$("#song_title").html(data.title)

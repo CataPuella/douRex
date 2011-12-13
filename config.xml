@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="0.1" id="http://github.com/rnons/doubanfm">
+<widget xmlns="http://www.w3.org/ns/widgets" version="0.1" id="https://github.com/rnons/douRadio">
 	<name>Douban FM</name>
 	<description>A Customized Douban FM</description>
 	<icon src="img/icon_128.png"/>
   <author href="http://github.com/rnons" email="remotenonsense@gmail.com">rnons</author>
 	<feature name="opera:share-cookies" required="true"/>
-	<access origin="http://douban.fm"/>
+	<access origin="http://douban.fm" subdomains="true"/>
+	<access origin="http://douban.com" subdomains="true"/>
+	<access origin="http://fanfou.com" subdomains="true"/>
 </widget>

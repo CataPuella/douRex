@@ -1,4 +1,3 @@
-var doubanfm = {};
 var radio = {};
 var jp_div = document.createElement('div');
 	
@@ -18,7 +17,6 @@ $(document).ready(function() {
 		supplied: "mp3",
 		wmode: "window"
 	});
-	doubanfm = $("#jquery_jplayer");
 });             
 
 window.addEventListener("load", function(){
