@@ -20,17 +20,10 @@ Radio.init=function(audio){
 	$.ajaxSetup({async:false})
 	console.log("init radio...")
 	var radio=new Radio()
-	radio.audio=audio
-	radio.jaudio=$("#jquery_jplayer")
+	//radio.audio=audio
+	radio.jaudio=audio
 	radio.channel=localStorage['channel']?localStorage['channel']:0	
-	/*audio.addEventListener("ended",function(){
-		radio.reportEnd()
-		radio.changeSong("p")
-		console.log("song end")
-		var notification = webkitNotifications.createHTMLNotification('notification.html');
-		notification.show();
-	})*/
-	
+		
 	//douban.fm的cookie是session级别，从豆瓣主站获取dbcl2的cookie到
 	/*chrome.cookies.get({
 		url:"http://douban.com",
@@ -53,7 +46,7 @@ Radio.init=function(audio){
 Radio.prototype.getPlayList=function(t,skip){
 	var self =this
 	if(skip){
-		this.audio.pause()
+		//this.audio.pause()
 	}
 	var self=this
 	$.getJSON("http://douban.fm/j/mine/playlist",{
@@ -100,8 +93,8 @@ Radio.prototype.changeSong=function(t){
 		this.heared=h_songs.slice(-20).join("|")
 	}
 	console.log("get next song: "+this.c_song.sid)
-	this.audio.src=this.c_song.url
-	this.audio.play()
+	//this.audio.src=this.c_song.url
+	//this.audio.play()
 	opera.postError(this.c_song.url)
     this.jaudio.jPlayer("clearMedia")
     this.jaudio.jPlayer("setMedia", {mp3: this.c_song.url})

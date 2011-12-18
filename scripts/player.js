@@ -1,4 +1,3 @@
-//var radio=chrome.extension.getBackgroundPage().radio;
 var radio=opera.extension.bgProcess.radio
 console.log(radio.channel);
 
@@ -20,7 +19,6 @@ function showSong(){
 	if(data.title){
 		$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>")
 		$("#song_title").attr("title",data.title)	
-		//$("#song_title").attr("href",page)
 		$("#song_artist").html(data.artist)
 		$("#song_artist").attr("title",data.artist)
 		$("#song_artist").attr("href",page)
@@ -79,15 +77,47 @@ $("#delete").bind("click",function(){
 	return false;
 });
 
-$("#comment_commit").bind("click",function(){
-	var nodes=$(".comment_button")
-	content=$("#comment_input").val()
-	$.each(nodes,function(index,value){
-		var isSelected=$(value).attr("selected")
-		if(isSelected=="true"){
-			doComment($(value).attr("id"),content)
-		}
-	})
+$("#fanfou").bind("click",function(){
+	if(!radio.power)
+		return false
+	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
+	var page="http://music.douban.com"+radio.c_song.album
+
+	var d=document, w=window, f='http://fanfou.com/share', l=d.location, e=encodeURIComponent, p='?u='+e(page)+'&t='+e(content)+'&d='+e("#豆瓣电台#")+'&s=bm';
+	a=function(){
+		if(!w.open(f+'r'+p,'sharer','toolbar=0,status=0,resizable=0,width=600,height=400'))
+			l.href=f+'.new'+p
+	};
+	if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else{a()}void(0)
+});
+
+$("#douban").bind("click",function(){
+	if(!radio.power)
+		return false
+	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
+	var page="http://music.douban.com"+radio.c_song.album
+	
+	var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(page)+'&title='+e(content)+'&sel='+e("#豆瓣电台#")+'&v=1',x=function(){
+	if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))
+		location.href=r+'&r=1'};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}
+	else{x()}
+});
+
+$("#sina").bind("click",function(){
+	if(!radio.power)
+		return false
+	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
+	var page="http://music.douban.com"+radio.c_song.album
+
+void((function(s,d,e,r,l,p,t,z,c){
+	var f='http://v.t.sina.com.cn/share/share.php?appkey=3672978985',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');
+	function a(){
+		if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))
+			u.href=[f,p].join('');
+	};
+	if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else a();
+	})(screen,document,encodeURIComponent,'','',radio.c_song.picture,content,page,'utf-8'));
+
 });
 
 $("#range")[0].addEventListener("input",function(){
@@ -105,79 +135,6 @@ $("#volume img").toggle(function(){
 },function(){
 	$("#range").hide()
 	$("#volume_bar").hide()
-})
-
-
-function doComment(id,content){
-	
-	var s=localStorage[id]
-	var ts=s.split(",")
-	
-	if(id=="fanfou"){
-		sendApiRequest({
-			url:"http://api.fanfou.com/statuses/update.json",
-			method:"POST",
-			content:{status:content},
-			consumer_key:"327fe47f56d57ead9539c3498772fc3d",
-			consumer_secret:"688edd10e5a2c923cf9421a644240e70",
-			access_token:ts[0],
-			access_secret:ts[1],
-			onSuccess:function(data){
-				console.log(data)
-				$("#comment_popup").slideUp("slow",function(){
-					$("#notify").fadeIn("slow").fadeOut("slow")
-				})
-			}
-		})
-	}
-
-	if(id=="douban"){
-	    var request_body = "<entry xmlns:ns0=\"http://www.w3.org/2005/Atom\" xmlns:db=\"http://www.douban.com/xmlns/\">";
-		request_body += "<content>"+content+"</content>";
-		request_body += "</entry>";		
-		sendApiRequest({
-			url:"http://api.douban.com/miniblog/saying",
-			method:"POST",
-			content:request_body,
-			consumer_key:"0458f5fa0cd49e2a0d0ae1ee267dda7e",
-			consumer_secret:"8670104fb9f59f9d",
-			access_token:ts[0],
-			access_secret:ts[1],
-			contentType:"application/atom+xml;charset=utf-8",
-			onSuccess:function(data){
-				console.log(data)
-				$("#comment_popup").slideUp("slow",function(){
-					$("#notify").fadeIn("slow").fadeOut("slow")
-				})
-			}
-		})
-	}
-}
-
-$("#comment_close").bind("click",function(){
-	$("#comment_popup").slideUp()
-})
-
-$(".comment_button").bind("click",function(){
-	var isSelected=$(this).attr("selected")
-	if(isSelected=="true"){
-		$(this).attr("selected","false")
-		$(this).css("opacity","0.4")
-	}else{
-		$(this).attr("selected","true")
-		$(this).css("opacity","1.0")
-	}	
-})
-
-$("#share img").bind("click",function(){
-	$("#comment_popup").slideDown("slow")
-	var c= $(this).attr("class")
-	$("#"+c).css("opacity","1.0")
-			.attr("selected","true")
-	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
-	content="#豆瓣电台# "+content
-	console.log(content)
-	$("#comment_input").val(content)
 })
 
 $("#switcher").bind("click",function(){
@@ -221,38 +178,6 @@ $("#mask").bind("click",function(){
 	$("#mask").hide()
 })
 
-/*var audio=radio.audio
-audio.addEventListener("ended",function(){
-	showSong()	
-})
-
-audio.addEventListener("timeupdate",function(){
-	var t=(this.currentTime/this.duration)*240
-	$("#played").css("width",t+"px")
-	var min=0
-	var second=0
-	var current=this.currentTime
-	min=parseInt(current/60)
-	second=parseInt(current%60)
-	if(second<10){
-		second="0"+second
-	}
-	var c=min+":"+second
-	min=0
-	second=0
-	total=this.duration
-	min=parseInt(total/60)
-	second=parseInt(total%60)
-	if(second<10){
-		second="0"+second
-	}
-	var t=min+":"+second
-	$("#timer").text(c+"/"+t)
-
-})
-
-audio.addEventListener("play",function(){
-})*/
 radio.jaudio.unbind(".douRadio")
 radio.jaudio.bind($.jPlayer.event.timeupdate+'.douRadio', function(event){
 	//var t=(this.currentTime/this.duration)*230
@@ -288,15 +213,6 @@ radio.jaudio.bind($.jPlayer.event.ended+'.douRadio', function(event){
 	opera.postError(radio.c_song.title)
 	showSong()
 })
-
-
-var shares=localStorage["users"]
-if(shares){
-	$.each(shares.split(","),function(index,value){
-		$("."+value.split("|")[2]).show()
-		$("#"+value.split("|")[2]).show()
-	})
-}
 
 if(radio.power){
 	showSong();

@@ -10,7 +10,7 @@ $(document).ready(function() {
     $("#jquery_jplayer").jPlayer({
 		ready: function(event) {
 			opera.postError("jplayer ready");
-			radio=Radio.init($("#radio")[0])
+			radio=Radio.init($("#jquery_jplayer"))
 		},
 		swfPath: "lib/Jplayer.swf",
 		solution: "flash",
