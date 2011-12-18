@@ -4,6 +4,7 @@ console.log(radio.channel);
 
 function showSong(){
 	var data=radio.c_song;
+	var page="http://music.douban.com"+data.album
 	if(data&&data.like==1){
 		$("#like").attr("src","img/rated.png")
 	}else{
@@ -17,14 +18,19 @@ function showSong(){
 		$("#pause").hide()
 	}
 	if(data.title){
-		$("#song_title").html(data.title)
+		$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>")
 		$("#song_title").attr("title",data.title)	
+		//$("#song_title").attr("href",page)
 		$("#song_artist").html(data.artist)
 		$("#song_artist").attr("title",data.artist)
+		$("#song_artist").attr("href",page)
 	}
 };
 
 $("#skip").bind("click",function(){
+	if(!radio.power){
+		return false;
+	}
 	radio.skip();
 	showSong();
 	return false;
@@ -40,13 +46,18 @@ $("#power").bind("click",function(){
 		radio.powerOff();
 		$(this).attr("src","img/on.png")
 		$("#pause").hide()
-		$("#song_title").html("豆瓣电台")
-		$("#song_title").attr("title","豆瓣电台")
+		$("#song_title").html("--")
+		$("#song_title").attr("title","")
+		$("#song_artist").html("豆瓣电台")
+		$("#song_artist").attr("title","豆瓣电台")
 	}
 	return false;
 });
 
 $("#like").bind("click",function(){
+	if(!radio.power){
+		return false;
+	}
 	if(radio.c_song.like==0){
 		radio.like();
 		$("#like").attr("src","img/rated.png");
@@ -60,6 +71,9 @@ $("#like").bind("click",function(){
 });
 
 $("#delete").bind("click",function(){
+	if(!radio.power){
+		return false;
+	}
 	radio.del();
 	showSong()
 	return false;
@@ -82,6 +96,7 @@ $("#range")[0].addEventListener("input",function(){
 	$("#volume_bar").css("width",len+"px")
 	//var a=radio.audio.volume=$(this).val()/100
 	radio.jaudio.jPlayer("volume",$(this).val()/100)
+	localStorage["volume"]=$(this).val()/100
 })
 
 $("#volume img").toggle(function(){
@@ -159,7 +174,7 @@ $("#share img").bind("click",function(){
 	var c= $(this).attr("class")
 	$("#"+c).css("opacity","1.0")
 			.attr("selected","true")
-	var content=$("#song_title").attr("title")
+	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
 	content="#豆瓣电台# "+content
 	console.log(content)
 	$("#comment_input").val(content)
@@ -194,6 +209,9 @@ $("#close_c").bind("click",function(){
 $("#pause").bind("click",function(){
 	//radio.audio.pause()
 	radio.jaudio.jPlayer("pause")
+	if(!radio.power){
+		return false;
+	}
 	$("#mask").show()
 })
 
@@ -209,7 +227,7 @@ audio.addEventListener("ended",function(){
 })
 
 audio.addEventListener("timeupdate",function(){
-	var t=(this.currentTime/this.duration)*230
+	var t=(this.currentTime/this.duration)*240
 	$("#played").css("width",t+"px")
 	var min=0
 	var second=0
@@ -240,7 +258,7 @@ radio.jaudio.bind($.jPlayer.event.timeupdate+'.douRadio', function(event){
 	//var t=(this.currentTime/this.duration)*230
 	var current=radio.jaudio.data("jPlayer").status.currentTime
 	var total=radio.jaudio.data("jPlayer").status.duration
-	var t=(current/total)*230
+	var t=(current/total)*240
 	$("#played").css("width",t+"px")
 	var min=0
 	var second=0
@@ -263,6 +281,15 @@ radio.jaudio.bind($.jPlayer.event.timeupdate+'.douRadio', function(event){
 	$("#timer").text(c+"/"+t)
 })
 
+radio.jaudio.bind($.jPlayer.event.ended+'.douRadio', function(event){
+	opera.postError("ended")
+	radio.reportEnd()
+	radio.changeSong("p")
+	opera.postError(radio.c_song.title)
+	showSong()
+})
+
+
 var shares=localStorage["users"]
 if(shares){
 	$.each(shares.split(","),function(index,value){
@@ -278,4 +305,13 @@ if(radio.power){
 		$("#mask").show()
 	}
 }
+var vol=localStorage["volume"]
+if(!vol){
+	vol=0.8
+}
+$("#range").val(vol*100)
+$("#volume_bar").css("width",vol*50+"px")
+radio.jaudio.jPlayer("volume",vol)
+//audio.volume=vol
+
 
