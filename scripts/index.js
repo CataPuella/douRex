@@ -33,3 +33,12 @@ window.addEventListener("load", function(){
 	theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
 	opera.contexts.toolbar.addItem(theButton);
 }, false);
+
+opera.extension.onmessage = function(event) {
+    subject_id = event.data;
+	radio.channel = 0;
+    radio.context = "channel:0|subject_id:"+subject_id;
+    opera.postError(radio.context);
+    radio.powerOn();
+}
+

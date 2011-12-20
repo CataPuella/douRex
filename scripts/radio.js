@@ -11,6 +11,7 @@ var Radio=function(){
 	this.power=false;
 	this.uid='';
 	this.heared='';
+	this.context='';
 }
 
 /**
@@ -52,6 +53,7 @@ Radio.prototype.getPlayList=function(t,skip){
 	$.getJSON("http://douban.fm/j/mine/playlist",{
 			type:t,
 			channel:this.channel,
+			context:this.context,
 			h:this.heared,
 			sid:this.c_song? this.c_song.sid:'',
 			r:Math.random(),
@@ -61,6 +63,7 @@ Radio.prototype.getPlayList=function(t,skip){
 			var songs=data.song
 			for(s in songs){
 				self.song_list[s]=songs[s]
+				opera.postError(songs[s].title)
 			}
 			if(skip){
 				self.changeSong(t)
@@ -133,3 +136,4 @@ Radio.prototype.powerOff=function(){
 	//this.audio.pause()
 	this.jaudio.jPlayer("pause")
 }
+
