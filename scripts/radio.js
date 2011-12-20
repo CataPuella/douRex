@@ -63,7 +63,7 @@ Radio.prototype.getPlayList=function(t,skip){
 			var songs=data.song
 			for(s in songs){
 				self.song_list[s]=songs[s]
-				opera.postError(songs[s].title)
+				//opera.postError(songs[s].title)
 			}
 			if(skip){
 				self.changeSong(t)

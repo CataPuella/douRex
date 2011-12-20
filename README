@@ -1,7 +1,13 @@
 豆瓣电台Opera Extension
 based upon https://github.com/ylm201/douRadio
 
-changelog  -  2011-12-13
+Changelog  -  2011-12-20
+1. 采用网页分享(支持豆瓣、饭否、新浪)
+2. 从歌曲名链接到豆瓣专辑页面
+3. 在专辑页面可选择从插件播放
+4. 在音乐收藏(想听、听过)页面可选择从插件播放
+
+Changelog  -  2011-12-13
 1. Opera的<audio>标签不支持mp3格式，改用jPlayer库
 2. 增加index.js，用于后台播放
 3. off状态不显示暂停按钮
