@@ -3,6 +3,7 @@
 // ==/UserScript==
 var subject = /subject/g;
 var people = /people/g;
+var mine = /mine/g;
 if ( subject.test(document.URL) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio = document.getElementsByClassName("start_radio")[0];
@@ -12,7 +13,10 @@ if ( subject.test(document.URL) ){
 		douRex.href = "javascript:;"
 		douRex.addEventListener('click', function() {
 			opera.postError('clicked');
-			opera.extension.postMessage(document.URL.substr(32,7));
+			opera.extension.postMessage({
+				action: 'play',
+				subject_id: document.URL.substr(32,7)
+			});
 		},false);
 		var p = document.createElement("p");
 		p.appendChild(douRex);
@@ -22,7 +26,7 @@ if ( subject.test(document.URL) ){
 	}, false);
 }
 
-if ( people.test(document.URL) ){
+if ( people.test(document.URL) || mine.test(document.URL) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio_all = document.getElementsByClassName("start_radio");
 		for (i=0; i<start_radio_all.length; i++){
@@ -32,7 +36,10 @@ if ( people.test(document.URL) ){
 			douRex.href = "javascript:;"
 			douRex.addEventListener('click', function() {
 				opera.postError('clicked');
-				opera.extension.postMessage(this.parentNode.getElementsByTagName("a")[0].href.substr(32,7));
+				opera.extension.postMessage({
+					action: 'play',
+					subject_id: this.parentNode.getElementsByTagName("a")[0].href.substr(32,7)
+				});
 			},false);
 			//douRex.style="background-origin: padding-box; background-clip: border-box; background-color: transparent;"
 

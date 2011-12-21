@@ -34,11 +34,22 @@ window.addEventListener("load", function(){
 	opera.contexts.toolbar.addItem(theButton);
 }, false);
 
-opera.extension.onmessage = function(event) {
-    subject_id = event.data;
-	radio.channel = 0;
-    radio.context = "channel:0|subject_id:"+subject_id;
-    opera.postError(radio.context);
-    radio.powerOn();
+opera.extension.onmessage = function(e) {
+	switch (e.data.action) {
+		case 'play':
+			subject_id = e.data.subject_id;
+			radio.channel = 0;
+			radio.context = "channel:0|subject_id:"+subject_id;
+			opera.postError(radio.context);
+			radio.powerOn();
+			break;
+		/*case 'update':
+			opera.postError('receive msg');
+			opera.extension.broadcastMessage({
+				action: 'show',
+				song_info: e.data.song_info
+			});
+			break;*/
+	}
 }
 

@@ -216,7 +216,6 @@ radio.jaudio.bind($.jPlayer.event.ended+'.douRadio', function(event){
 
 if(radio.power){
 	showSong();
-	//if(radio.audio.paused){
 	if(radio.jaudio.data("jPlayer").status.paused){
 		$("#mask").show()
 	}
