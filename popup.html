@@ -20,7 +20,10 @@
 				<img id="switcher" img src="img/channel.png"/>
 			</div>
 			<div id="display">
-				<span id="song_title">--</span>
+				<div>
+					<span id="song_title">--</span>
+					<img src="img/lyric.png" class="lyric_button" id="search_lrc" title="去g.cn搜歌词" style="display:none"/>
+				</div>
 				<div id="loaded">
 					<div id="played"></div>
 				</div>
@@ -40,9 +43,9 @@
 					<img src="img/skip.png"  class="button"  id="skip" />
 				</div>
 				<div id="oshare">
-					<img src="img/sina.png" class="comment_button" id="sina"/>
-					<img src="img/fanfou.jpg" class="comment_button" id="fanfou"/>
-					<img src="img/douban.png" class="comment_button" id="douban"/>
+					<img src="img/sina.png" class="comment_button" id="sina" title="分享到新浪微博"/>
+					<img src="img/fanfou.jpg" class="comment_button" id="fanfou" title="分享到饭否"/>
+					<img src="img/douban.png" class="comment_button" id="douban" title="分享到豆瓣"/>
 				</div>
 				<div class="clear"></div>
 			</div>
@@ -67,5 +70,6 @@
 			</ul>
 		</div>
 		<script type="text/javascript" src="scripts/player.js"></script>
+		<script type="text/javascript" src="scripts/lyriki.js"></script>
 	</body>
 </html>

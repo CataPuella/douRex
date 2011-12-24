@@ -12,9 +12,11 @@ function showSong(){
 	if(radio.power==true){
 		$("#power").attr("src","img/off.png")
 		$("#pause").show()
+		$("#search_lrc").show()
 	}else{
 		$("#power").attr("src","img/on.png")
 		$("#pause").hide()
+		$("search_lrc").hide()
 	}
 	if(data.title){
 		$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>")
@@ -39,15 +41,19 @@ $("#power").bind("click",function(){
 		radio.powerOn();
 		$(this).attr("src","img/off.png")
 		$("#pause").show()
+		$("#search_lrc").show()
 		showSong();
 	}else{
 		radio.powerOff();
 		$(this).attr("src","img/on.png")
 		$("#pause").hide()
+		$("#search_lrc").hide()
 		$("#song_title").html("--")
 		$("#song_title").attr("title","")
 		$("#song_artist").html("豆瓣电台")
 		$("#song_artist").attr("title","豆瓣电台")
+		$("#played").css("width","0px")
+		$("#timer").text("0:00/0:00")
 	}
 	return false;
 });
@@ -81,7 +87,10 @@ $("#fanfou").bind("click",function(){
 	if(!radio.power)
 		return false
 	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
-	var page="http://music.douban.com"+radio.c_song.album
+	if(radio.channel==26)
+		var page=radio.c_song.album
+	else
+		var page="http://music.douban.com"+radio.c_song.album
 
 	var d=document, w=window, f='http://fanfou.com/share', l=d.location, e=encodeURIComponent, p='?u='+e(page)+'&t='+e(content)+'&d='+e("#豆瓣电台#")+'&s=bm';
 	a=function(){
@@ -95,7 +104,10 @@ $("#douban").bind("click",function(){
 	if(!radio.power)
 		return false
 	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
-	var page="http://music.douban.com"+radio.c_song.album
+		if(radio.channel==26)
+		var page=radio.c_song.album
+	else
+		var page="http://music.douban.com"+radio.c_song.album
 	
 	var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:'',r='http://www.douban.com/recommend/?url='+e(page)+'&title='+e(content)+'&sel='+e("#豆瓣电台#")+'&v=1',x=function(){
 	if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))
@@ -107,7 +119,10 @@ $("#sina").bind("click",function(){
 	if(!radio.power)
 		return false
 	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
-	var page="http://music.douban.com"+radio.c_song.album
+	if(radio.channel==26)
+		var page=radio.c_song.album
+	else
+		var page="http://music.douban.com"+radio.c_song.album
 
 void((function(s,d,e,r,l,p,t,z,c){
 	var f='http://v.t.sina.com.cn/share/share.php?appkey=3672978985',u=z||d.location,p=['&url=',e(u),'&title=',e(t||d.title),'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');

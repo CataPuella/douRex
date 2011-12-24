@@ -20,23 +20,24 @@ function show(info){
 		clean();
 	var el = document.createElement('div');
 	el.style.position = 'fixed !important';
-	el.style.textAlign = 'left !important';
 	el.style.fontFamily = 'sans-serif !important';
 	el.style.margin = '0 !important';
-	el.style.padding = '14px !important';
-	el.style.borderRadius = '2.5px !important';
-	el.style.backgroundColor = '#faefe3' //colors.backgroundColor + ' !important';
-	el.style.color = '#3b5343';
-	el.style.fontSize = '14px';
+	el.style.padding = '5px 10px';
+	el.style.borderColor = '#006600'; // '#3b5343';
+	//el.style.borderStyle = 'ridge';
+	el.style.borderWidth = '1px';
+	el.style.borderRadius = '50%' //'7.5px !important';
+	el.style.backgroundColor = '#e00000'; //'#faefe3' //colors.backgroundColor + ' !important';
+	el.style.color = '#ffffff'; //'#3b5343';
+	el.style.fontSize = '16px';
+	el.style.font = 'bold';
 	el.style.opacity = '0 !important';
 	el.style.zIndex = '9999999 !important';
 	el.style.OTransition = 'opacity 0.5s !important';
 
-	el.innerHTML = '\\[ '+info+' ]/';
-	//	el.style.top = '10px !important';
-		el.style.right = '10px !important';
-		el.style.bottom = '10px !important';
-	//	el.style.left = '10px !important';
+	el.innerHTML = ' \\[ '+info+' ]/ ';
+	el.style.right = '0px !important';
+	el.style.bottom = '0px !important';
 
 	document.body.appendChild(el);
 

@@ -4,7 +4,7 @@ a:hover{opacity:0.8}
 #main{width:280px;padding:7px 4px 7px 4px;height:120px;overflow:hidden;}
 #power {float:right;width:20px;margin-top:8px;clear:both}
 #power:hover{opacity:0.7}
-#song_title a{white-space:nowrap;font-size:12px;color:#3B5343;display:inline-block;overflow:hidden;width:238px;line-height:15px;margin-bottom:1px;text-decoration:none}
+#song_title a{white-space:nowrap;font-size:12px;color:#3B5343;display:inline-block;overflow:hidden;line-height:15px;margin-bottom:1px;text-decoration:none}
 #song_artist {white-space:nowrap;font-size:15px;color:#3B5343;font-weight:bold;display:inline-block;overflow:hidden;width:238px;line-height:15px}
 #display{margin-top:5px;width:240px;}
 #loaded{height:3px;background-color:#E9F4E9;width:240px;opacity:0.8;margin-top:2px}
@@ -45,6 +45,8 @@ a:hover{opacity:0.8}
 #comment_close:hover{opacity:0.8}
 .comment_button{float:right;width:16px;height:16px;opacity:0.3;margin-right:5px;margin-top:4px}
 .comment_button:hover{opacity:1.0}
+.lyric_button{width:20px;height:15px;}
+.lyric_button:hover{opacity:0.8}
 #notify{width:80px;height:30px;background-color:#3B5343;opacity:0.8;position:absolute;z-index:10000;left:0;top:0}
 #notify span{color:#fff;margin-left:7px;margin-top:5px;display:block}
 #volume img{vertical-align:middle;float:left}

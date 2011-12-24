@@ -43,13 +43,12 @@ opera.extension.onmessage = function(e) {
 			opera.postError(radio.context);
 			radio.powerOn();
 			break;
-		/*case 'update':
-			opera.postError('receive msg');
+		case 'nolrc':
 			opera.extension.broadcastMessage({
 				action: 'show',
-				song_info: e.data.song_info
+				song_info: 'Sorry, lyrics not found!'
 			});
-			break;*/
+			break;
 	}
 }
 

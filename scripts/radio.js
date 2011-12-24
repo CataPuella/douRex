@@ -104,7 +104,6 @@ Radio.prototype.changeSong=function(t){
 	this.jaudio.jPlayer("load")
     this.jaudio.jPlayer("play")
 
-	opera.postError('postmsg');
     opera.extension.broadcastMessage({
         action: 'show',
         song_info: this.c_song.artist + ' - ' + this.c_song.title
