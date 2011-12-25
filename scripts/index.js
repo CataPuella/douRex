@@ -36,10 +36,17 @@ window.addEventListener("load", function(){
 
 opera.extension.onmessage = function(e) {
 	switch (e.data.action) {
-		case 'play':
+		case 'play_album':
 			subject_id = e.data.subject_id;
 			radio.channel = 0;
 			radio.context = "channel:0|subject_id:"+subject_id;
+			opera.postError(radio.context);
+			radio.powerOn();
+			break;
+		case 'play_musician':
+			musician_id = e.data.musician_id;
+			radio.channel = 0;
+			radio.context = "channel:0|musician_id:"+musician_id;
 			opera.postError(radio.context);
 			radio.powerOn();
 			break;

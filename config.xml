@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="0.1" id="https://github.com/rnons/douRadio">
-	<name>Douban FM</name>
-	<description>A Customized Douban FM</description>
-	<icon src="img/icon_128.png"/>
-  <author href="http://github.com/rnons" email="remotenonsense@gmail.com">rnons</author>
+<widget xmlns="http://www.w3.org/ns/widgets" version="1.2" id="https://addons.opera.com/addons/extensions/details/doubanfm-2/">
+	<name>doubanfm</name>
+	<icon src="img/icon_48.png"/>
 	<feature name="opera:share-cookies" required="true"/>
 	<access origin="http://douban.fm" subdomains="true"/>
 	<access origin="http://douban.com" subdomains="true"/>
 	<access origin="http://google.cn" subdomains="true"/>
 	<access origin="http://top100.cn" subdomains="true"/>
+	<license>Copyright 2011 rnons
+    
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</license>
+
+  <author href="http://github.com/rnons" email="remotenonsense@gmail.com">rnons</author>
+	<update-description href="https://extension-updates.opera.com/api/w3c-wd1/update/a8720e91-1abe-4d56-8c8d-84bad9111082/"/>
+	<description xml:lang="en">douban Radio EXtension</description>
 </widget>

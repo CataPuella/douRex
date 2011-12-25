@@ -1,34 +1,45 @@
 // ==UserScript==
 // @include http://music.douban.com/*
 // ==/UserScript==
-var subject = /subject/g;
-var people = /people/g;
-var mine = /mine/g;
-if ( subject.test(document.URL) ){
+var subject = /subject\//;
+var people = /people/;
+var mine = /mine/;
+var musician = /musician/;
+var search = /search/;
+var url = document.URL;
+if ( subject.test(url) || musician.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio = document.getElementsByClassName("start_radio")[0];
 		if ( !start_radio )
 			return;		
 		var douRex = document.createElement("a");
 		douRex.title = "在douRex中播放";
-		douRex.text = "\u00a0"+"douRex";
+		douRex.text = "douRex";
 		douRex.href = "javascript:;"
+			
 		douRex.addEventListener('click', function() {
-			opera.postError('clicked');
-			opera.extension.postMessage({
-				action: 'play',
-				subject_id: document.URL.substr(32,7)
-			});
+			if ( musician.test(url)) {
+				opera.extension.postMessage({
+				action: 'play_musician',
+				musician_id: document.URL.substr(33,6)
+				});
+			}
+			else{
+				opera.extension.postMessage({
+					action: 'play_album',
+					subject_id: document.URL.substr(32,7)
+				});
+			}
 		},false);
 		var p = document.createElement("p");
 		p.appendChild(douRex);
-		var text = document.createTextNode("\u00a0"+"\u00a0"+"\u00a0"+"也在播放^_^");
+		var text = document.createTextNode("\u00a0"+"\u00a0"+"也在播放^_^");
 		p.appendChild(text);
 		start_radio.appendChild(p);
 	}, false);
 }
 
-if ( people.test(document.URL) || mine.test(document.URL) ){
+if ( people.test(url) || mine.test(url) || search.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio_all = document.getElementsByClassName("start_radio");
 		if ( !start_radio_all )
@@ -39,9 +50,8 @@ if ( people.test(document.URL) || mine.test(document.URL) ){
 			douRex.text = "\\[douRex]/";
 			douRex.href = "javascript:;"
 			douRex.addEventListener('click', function() {
-				opera.postError('clicked');
 				opera.extension.postMessage({
-					action: 'play',
+					action: 'play_album',
 					subject_id: this.parentNode.getElementsByTagName("a")[0].href.substr(32,7)
 				});
 			},false);
@@ -50,5 +60,27 @@ if ( people.test(document.URL) || mine.test(document.URL) ){
 			start_radio.parentNode.appendChild(douRex);
 		}	
 	}, false);
-	
+}
+
+if ( search.test(url) ){
+	document.addEventListener('DOMContentLoaded', function() {
+		var start_radio_musician = document.getElementsByClassName("start_radio_musician ll");
+		if ( !start_radio_musician )
+			return;		
+		for (i=0; i<start_radio_musician.length; i++){
+			var douRex = document.createElement("a");
+			douRex.title = "在douRex中播放";
+			douRex.text = "\\[douRex]/";
+			douRex.href = "javascript:;"
+			douRex.addEventListener('click', function() {
+				opera.extension.postMessage({
+					action: 'play_musician',
+					musician_id: this.parentNode.getElementsByTagName("a")[0].href.substr(33,6)
+				});
+			},false);
+
+			var start_radio = start_radio_musician[i];
+			start_radio.parentNode.appendChild(douRex);
+		}	
+	},false);
 }
