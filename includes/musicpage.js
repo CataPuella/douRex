@@ -13,7 +13,7 @@ if ( subject.test(url) || musician.test(url) ){
 		if ( !start_radio )
 			return;		
 		var douRex = document.createElement("a");
-		douRex.title = "在douRex中播放";
+		douRex.title = "用douRex收听";
 		douRex.text = "douRex";
 		douRex.href = "javascript:;"
 			
@@ -46,7 +46,7 @@ if ( people.test(url) || mine.test(url) || search.test(url) ){
 			return;		
 		for (i=0; i<start_radio_all.length; i++){
 			var douRex = document.createElement("a");
-			douRex.title = "在douRex中播放";
+			douRex.title = "用douRex收听";
 			douRex.text = "\\[douRex]/";
 			douRex.href = "javascript:;"
 			douRex.addEventListener('click', function() {
@@ -69,9 +69,10 @@ if ( search.test(url) ){
 			return;		
 		for (i=0; i<start_radio_musician.length; i++){
 			var douRex = document.createElement("a");
-			douRex.title = "在douRex中播放";
+			douRex.title = "用douRex收听";
 			douRex.text = "\\[douRex]/";
 			douRex.href = "javascript:;"
+			douRex.style = "font-size:14px;"
 			douRex.addEventListener('click', function() {
 				opera.extension.postMessage({
 					action: 'play_musician',

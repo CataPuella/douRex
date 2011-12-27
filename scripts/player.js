@@ -19,7 +19,10 @@ function showSong(){
 		$("search_lrc").hide()
 	}
 	if(data.title){
-		$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>")
+		if(radio.channel==26)
+			$("#song_title").html("<a href='"+data.album+"'>"+data.title+"</a>")
+		else
+			$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>")
 		$("#song_title").attr("title",data.title)	
 		$("#song_artist").html(data.artist)
 		$("#song_artist").attr("title",data.artist)

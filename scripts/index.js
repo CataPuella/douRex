@@ -22,7 +22,7 @@ $(document).ready(function() {
 window.addEventListener("load", function(){
 	var theButton;
 	var ToolbarUIItemProperties = {
-	  	title: "Douban FM",
+	  	title: "douRex",
   	icon: "img/icon.png",
   	popup: {
 		href: "popup.html",
@@ -38,6 +38,7 @@ opera.extension.onmessage = function(e) {
 	switch (e.data.action) {
 		case 'play_album':
 			subject_id = e.data.subject_id;
+			localStorage["channel"] = 0;
 			radio.channel = 0;
 			radio.context = "channel:0|subject_id:"+subject_id;
 			opera.postError(radio.context);
@@ -45,6 +46,7 @@ opera.extension.onmessage = function(e) {
 			break;
 		case 'play_musician':
 			musician_id = e.data.musician_id;
+			localStorage["channel"] = 0;
 			radio.channel = 0;
 			radio.context = "channel:0|musician_id:"+musician_id;
 			opera.postError(radio.context);
