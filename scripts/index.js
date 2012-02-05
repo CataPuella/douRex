@@ -38,6 +38,9 @@ opera.extension.onmessage = function(e) {
 	switch (e.data.action) {
 		case 'play_album':
 			subject_id = e.data.subject_id;
+			if ( e.data.subject_id[7] == "\/" ){
+				subject_id = e.data.subject_id.substr(0,7);
+			}
 			localStorage["channel"] = 0;
 			radio.channel = 0;
 			radio.context = "channel:0|subject_id:"+subject_id;

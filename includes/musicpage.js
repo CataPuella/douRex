@@ -1,11 +1,18 @@
 // ==UserScript==
 // @include http://music.douban.com/*
 // ==/UserScript==
-var subject = /subject\//;
-var people = /people/;
+
+var subject = /subject\//;  //exclude subject_search page
+//var people = /people\//;
+var wish = /wish/;
+var dofm = /\/do/;
+var collect = /collect/;
 var mine = /mine/;
-var musician = /musician/;
+var musician = /musician\//;
 var search = /search/;
+var tag = /tag/;
+var doulist = /doulist/;
+var musicians = /musicians/;
 var url = document.URL;
 if ( subject.test(url) || musician.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
@@ -25,9 +32,16 @@ if ( subject.test(url) || musician.test(url) ){
 				});
 			}
 			else{
+				if ( document.URL.substr(39,1) == "\/" ) {
+					album = document.URL.substr(32,7)
+				}
+				else{
+					album = document.URL.substr(32,8)
+				}
 				opera.extension.postMessage({
 					action: 'play_album',
-					subject_id: document.URL.substr(32,7)
+					subject_id: album
+					//subject_id: document.URL.substr(32,7)
 				});
 			}
 		},false);
@@ -39,7 +53,7 @@ if ( subject.test(url) || musician.test(url) ){
 	}, false);
 }
 
-if ( people.test(url) || mine.test(url) || search.test(url) ){
+if ( wish.test(url) || dofm.test(url) || collect.test(url) || mine.test(url) || search.test(url) || tag.test(url) || doulist.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio_all = document.getElementsByClassName("start_radio");
 		if ( !start_radio_all )
@@ -52,7 +66,7 @@ if ( people.test(url) || mine.test(url) || search.test(url) ){
 			douRex.addEventListener('click', function() {
 				opera.extension.postMessage({
 					action: 'play_album',
-					subject_id: this.parentNode.getElementsByTagName("a")[0].href.substr(32,7)
+					subject_id: this.parentNode.getElementsByTagName("a")[0].href.substr(32,8)
 				});
 			},false);
 
@@ -62,9 +76,15 @@ if ( people.test(url) || mine.test(url) || search.test(url) ){
 	}, false);
 }
 
-if ( search.test(url) ){
+if ( search.test(url) || musicians.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
-		var start_radio_musician = document.getElementsByClassName("start_radio_musician ll");
+		var start_radio_musician = null;
+		if ( search.test(url) ) {
+			start_radio_musician = document.getElementsByClassName("start_radio_musician ll");
+		}
+		else {
+			start_radio_musician = document.getElementsByClassName("start_radio");
+		}
 		if ( !start_radio_musician )
 			return;		
 		for (i=0; i<start_radio_musician.length; i++){
@@ -85,3 +105,5 @@ if ( search.test(url) ){
 		}	
 	},false);
 }
+
+
