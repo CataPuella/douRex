@@ -99,9 +99,8 @@ Radio.prototype.changeSong=function(t){
 	//this.audio.src=this.c_song.url
 	//this.audio.play()
 	opera.postError(this.c_song.url)
-    this.jaudio.jPlayer("clearMedia")
     this.jaudio.jPlayer("setMedia", {mp3: this.c_song.url})
-	this.jaudio.jPlayer("load")
+	//this.jaudio.jPlayer("load")
     this.jaudio.jPlayer("play")
 
     opera.extension.broadcastMessage({
@@ -139,6 +138,9 @@ Radio.prototype.powerOn=function(){
 Radio.prototype.powerOff=function(){
 	this.power=false
 	//this.audio.pause()
-	this.jaudio.jPlayer("pause")
+	//this.jaudio.jPlayer("pause")
+    this.jaudio.jPlayer("clearMedia")
+    this.jaudio.jPlayer("stop")
+    location.reload()
 }
 

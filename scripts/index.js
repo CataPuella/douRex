@@ -1,5 +1,6 @@
 var radio = {};
 var jp_div = document.createElement('div');
+var pref = widget.preferences;
 	
 $(document).ready(function() {
 	jp_div.id = "jquery_jplayer";
@@ -32,7 +33,12 @@ window.addEventListener("load", function(){
 	}
 	theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
 	opera.contexts.toolbar.addItem(theButton);
+    if ( !pref.version || pref.version !=widget.version ){
+        opera.extension.tabs.create({ focused: true, url: 'http://rnons.github.com/douRex' });
+    }
+    pref.version = widget.version
 }, false);
+
 
 opera.extension.onmessage = function(e) {
 	switch (e.data.action) {
