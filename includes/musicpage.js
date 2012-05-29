@@ -14,7 +14,46 @@ var tag = /tag/;
 var doulist = /doulist/;
 var musicians = /musicians/;
 var url = document.URL;
-if ( subject.test(url) || musician.test(url) ){
+if ( subject.test(url) ){
+	document.addEventListener('DOMContentLoaded', function() {
+		var start_radio = document.getElementsByClassName("bs")[0];
+        opera.postError("hello")
+		if ( !start_radio )
+			return;		
+		var douRex = document.createElement("a");
+		douRex.title = "用douRex收听";
+		douRex.text = "douRex";
+		douRex.href = "javascript:;"
+			
+		douRex.addEventListener('click', function() {
+			if ( musician.test(url)) {
+				opera.extension.postMessage({
+				action: 'play_musician',
+				musician_id: document.URL.substr(33,6)
+				});
+			}
+			else{
+				if ( document.URL.substr(39,1) == "\/" ) {
+					album = document.URL.substr(32,7)
+				}
+				else{
+					album = document.URL.substr(32,8)
+				}
+				opera.extension.postMessage({
+					action: 'play_album',
+					subject_id: album
+					//subject_id: document.URL.substr(32,7)
+				});
+			}
+		},false);
+		var p = document.createElement("p");
+		p.appendChild(douRex);
+		var text = document.createTextNode("\u00a0"+"\u00a0"+"为您提供专辑播放^_^");
+		p.appendChild(text);
+		start_radio.appendChild(p);
+	}, false);
+}
+if ( musician.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio = document.getElementsByClassName("start_radio")[0];
 		if ( !start_radio )
