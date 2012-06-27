@@ -1,5 +1,5 @@
 body{margin:0}
-span{font-family: 微软雅黑;}
+span{font-family: sans-serif;}
 a:hover{opacity:0.8}
 #main{width:280px;padding:7px 4px 7px 4px;height:120px;overflow:hidden;}
 #power {float:right;width:20px;margin-top:8px;clear:both}

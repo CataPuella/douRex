@@ -1,0 +1,16 @@
+body { 
+  font: 14px sans-serif;
+}
+#container {width: 800px; margin: auto;}
+#footer {float: bottom;}
+a { 
+  cursor: pointer;
+  text-decoration: none;
+  color: #009966;
+  font: normal normal 400 14px/19.44px "WenQuanYi Zen Hei";
+}
+a:hover { 
+  background: #009966;
+  color: #FFFFFF;
+  text-decoration: none;
+}

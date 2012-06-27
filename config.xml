@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets" defaultlocale="zh-cn" version="1.2-9" id="https://addons.opera.com/addons/extensions/details/doubanfm-2/">
 	<name xml:lang="en">doubanfm</name>
 	<name xml:lang="zh-cn">豆瓣电台</name>
-	<icon src="img/icon_48.png"/>
+	<icon src="img/icon.png"/>
 	<feature name="opera:share-cookies" required="true"/>
 	<access origin="http://douban.fm" subdomains="true"/>
 	<access origin="http://douban.com" subdomains="true"/>
