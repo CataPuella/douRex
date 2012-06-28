@@ -14,3 +14,25 @@ a:hover {
   color: #FFFFFF;
   text-decoration: none;
 }
+#header {
+}
+#logo {
+  float: left;
+}
+#navigation {
+  height: 64px;
+  color: #D4D4D4;
+}
+#navigation ul {
+  float: left;
+  color: #D4D4D4;
+  list-style: none;
+}
+#navigation ul li {
+  margin: 0px 30px;
+  font: normal normal 400 14px/32px "WenQuanYi Zen Hei";
+  display: inline;
+}
+#content {
+  margin: 0;
+}

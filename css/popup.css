@@ -18,9 +18,6 @@ a:hover{opacity:0.8}
 #operation{width:120px;float:left}
 .button {margin-right:7px;cursor:pointer;width:20px;height:20px}
 .button:hover{opacity:0.7}
-#share{float:right;padding-top:5px}
-#share img{width:16px;height:16px;opacity:0.4;margin-left:3px;float:right}
-#share img:hover{opacity:1.0}
 .clear{clear:both}
 #channel_popup{background-color:#fff;height:100%;width:100%;overflow-y:scroll;position:absolute;z-index:999;left:0;top:0;padding:0px;opacity:0.95;display:none}
 #channels{list-style-type:none;list-style-position:outside;padding:0;text-align:center;margin-top:10px}
@@ -29,20 +26,6 @@ a:hover{opacity:0.8}
 #channels .channel_selected{background-color:#3B5345;color:#fff}
 #close_c{position:fixed;right:15px;top:5px;width:15px;opacity:0.5}
 #close_c:hover{opacity:1.0}
-#comment_popup{margin-bottom:5px}
-#comment_input{width:100%;height:70px;border-radius:5px;border-color:#3B5343;color:#888;font-size:15px}
-#comment_commit{float:right;border-radius:5px;width:75px;height:23px;border:none;margin-top:4px;color:#3B5343;background:	-webkit-gradient(
-	    linear,
-		left bottom,
-		left top,
-		color-stop(0.14, rgba(183,240,183,0.8)),
-		color-stop(0.25, rgba(187,237,187,0.9))
-	);
-	opacity:0.8
-}
-#comment_commit:hover{opacity:1.0;cursor:pointer}
-#comment_close{float:left;height:15px;margin-top:3px;margin-left:2px;opacity:0.4}
-#comment_close:hover{opacity:0.8}
 .comment_button{float:right;width:16px;height:16px;opacity:0.3;margin-right:5px;margin-top:4px}
 .comment_button:hover{opacity:1.0}
 .lyric_button{width:20px;height:15px;}

@@ -34,7 +34,7 @@ window.addEventListener("load", function(){
 	theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
 	opera.contexts.toolbar.addItem(theButton);
     if ( !pref.version || pref.version !=widget.version ){
-        opera.extension.tabs.create({ focused: true, url: 'http://rnons.github.com/douRex' });
+        opera.extension.tabs.create({ focused: true, url: 'options.html' });
     }
     pref.version = widget.version
 }, false);
@@ -61,6 +61,13 @@ opera.extension.onmessage = function(e) {
 			opera.postError(radio.context);
 			radio.powerOn();
 			break;
+        case 'play_channel':
+            cid = e.data.channel_id;
+            localStorage["channel"] = cid;
+            radio.channel = cid;
+			opera.postError(radio.channel);
+            radio.powerOn();
+            break;
 		case 'nolrc':
 			opera.extension.broadcastMessage({
 				action: 'show',

@@ -36,14 +36,23 @@
       </div>
       <div id="content">   
         <div id="tips">
-          <h3>特性</h3>
-          <p>
-          - 豆瓣电台全功能<br/>
-          - 分享到豆瓣、饭否、新浪<br/>
-          - 去g.cn搜歌词 <br/>
-          - 在专辑页面上显示"douRex  为您提供专辑播放^_^"<br/>
-          - 在<a href="http://douban.fm/explore">douban.fm/explore</a>页面显示"\[douRex]/"<img src="img/new_menu.gif">
-          </p>
+          <h3>无法收听?</h3>
+          <p>两种可能：</p>
+          <ol style="list-style-type: decimal">
+          <li>未将widget://设为flash可信路径 
+            <a href="#" id="showFix1">解决办法</a> </li>
+          <div id="fix1" style="display:none">
+              <p>进入<a href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html">flash安全设置页面</a>，Edit locations -> Add location，填入widget://</p>
+              <img src="http://img1.douban.com/view/group_topic/large/public/26074959-4.jpg">
+          </div>
+
+          <li>在Opera中选择了按需加载媒体
+            <a href="#" id="showFix2">解决办法</a> </li>
+            <div id="fix2" style="display:none">
+                <p>设置 -> 首选项 -> 高级 -> 内容，不要勾选“按需加载媒体”</p>
+                <p>Settings -> Preferences -> Advanced -> Content，不要勾选"Enable plug-ins only on demand"</p>
+            </div>
+          </ol>
         </div>
       </div>
       <div id="footer">

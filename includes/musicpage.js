@@ -1,5 +1,6 @@
 // ==UserScript==
 // @include http://music.douban.com/*
+// @include http://douban.fm/*
 // ==/UserScript==
 
 var subject = /subject\//;  //exclude subject_search page
@@ -13,6 +14,7 @@ var search = /search/;
 var tag = /tag/;
 var doulist = /doulist/;
 var musicians = /musicians/;
+var explore = /explore/;
 var url = document.URL;
 if ( subject.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
@@ -145,4 +147,30 @@ if ( search.test(url) || musicians.test(url) ){
 	},false);
 }
 
+if ( explore.test(url) ){
+	document.addEventListener('DOMContentLoaded', function() {
+        opera.postError("hello")
+		var start_radio_musician = null;
+		start_radio_musician = document.getElementsByClassName("item-link");
+		
+		if ( !start_radio_musician )
+			return;		
+		for (i=0; i<start_radio_musician.length; i++){
+			var douRex = document.createElement("a");
+			douRex.title = "用douRex收听";
+			douRex.text = "\\[douRex]/";
+			douRex.href = "javascript:;"
+			douRex.style = "font-size:14px;"
+			douRex.addEventListener('click', function() {
+				opera.extension.postMessage({
+					action: 'play_channel',
+					channel_id: this.parentNode.getElementsByTagName("a")[0].href.substr(22,7)
+				});
+			},false);
+
+			var start_radio = start_radio_musician[i];
+			start_radio.parentNode.appendChild(douRex);
+		}	
+	},false);
+}
 
