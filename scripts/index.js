@@ -24,7 +24,7 @@ window.addEventListener("load", function(){
 	var theButton;
 	var ToolbarUIItemProperties = {
 	  	title: "douRex",
-  	icon: "img/icon.png",
+  	icon: "img/icon_16.png",
   	popup: {
 		href: "popup.html",
 		width: 300,
@@ -34,7 +34,7 @@ window.addEventListener("load", function(){
 	theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
 	opera.contexts.toolbar.addItem(theButton);
     if ( !pref.version || pref.version !=widget.version ){
-        opera.extension.tabs.create({ focused: true, url: 'options.html' });
+        opera.extension.tabs.create({ focused: true, url: 'features.html' });
     }
     pref.version = widget.version
 }, false);
