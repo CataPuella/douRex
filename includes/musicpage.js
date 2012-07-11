@@ -19,7 +19,6 @@ var url = document.URL;
 if ( subject.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
 		var start_radio = document.getElementsByClassName("bs")[0];
-        opera.postError("hello")
 		if ( !start_radio )
 			return;		
 		var douRex = document.createElement("a");
@@ -151,11 +150,45 @@ if ( explore.test(url) ){
 	document.addEventListener('DOMContentLoaded', function() {
         opera.postError("hello")
 		var start_radio_musician = null;
-		start_radio_musician = document.getElementsByClassName("item-link");
+        var cid = null;
+        
+        // side channel list
+        start_radio_musician = document.getElementsByClassName("ch-name");
 		
 		if ( !start_radio_musician )
 			return;		
 		for (i=0; i<start_radio_musician.length; i++){
+			var douRex = document.createElement("a");
+			douRex.title = "用douRex收听";
+			douRex.text = "\\[douRex]/";
+			douRex.href = "javascript:;"
+			douRex.style = "font-size:12px;"
+			douRex.addEventListener('click', function() {
+                //cid = this.parentNode.getElementsByTagName("a")[0].href.substr(22,7)
+                cid = this.parentNode.parentNode.href.substr(22,7)
+                opera.postError(cid)
+                opera.postError("hello")
+
+				opera.extension.postMessage({
+					action: 'play_channel',
+					channel_id: cid
+				});
+
+			},false);
+
+			var start_radio = start_radio_musician[i];
+            start_radio.parentNode.style.height = '60px';
+			//start_radio.parentNode.appendChild(douRex);
+			start_radio.appendChild(douRex);
+		}
+        // recommend channels
+        
+        var start_radio_ch = null;
+		start_radio_ch = document.getElementsByClassName("item-link");
+		
+		if ( !start_radio_ch )
+			return;		
+		for (i=0; i<start_radio_ch.length; i++){
 			var douRex = document.createElement("a");
 			douRex.title = "用douRex收听";
 			douRex.text = "\\[douRex]/";
@@ -168,9 +201,9 @@ if ( explore.test(url) ){
 				});
 			},false);
 
-			var start_radio = start_radio_musician[i];
+			var start_radio = start_radio_ch[i];
 			start_radio.parentNode.appendChild(douRex);
-		}	
+		}
 	},false);
 }
 

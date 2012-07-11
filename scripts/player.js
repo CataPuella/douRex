@@ -3,6 +3,7 @@ console.log(radio.channel);
 
 function showSong(){
 	var data=radio.c_song;
+    var site = /site/;
 	var page="http://music.douban.com"+data.album
 	if(data&&data.like==1){
 		$("#like").attr("src","img/rated.png")
@@ -19,14 +20,14 @@ function showSong(){
 		$("search_lrc").hide()
 	}
 	if(data.title){
-		if(radio.channel==26)
+        if(site.test(data.album)){
 			$("#song_title").html("<a href='"+data.album+"'>"+data.title+"</a>")
-		else
+        }else{
 			$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>")
+        }
 		$("#song_title").attr("title",data.title)	
 		$("#song_artist").html(data.artist)
 		$("#song_artist").attr("title",data.artist)
-		$("#song_artist").attr("href",page)
 	}
 };
 
