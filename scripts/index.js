@@ -29,7 +29,7 @@ window.addEventListener("load", function () {
         popup: {
             href: "popup.html",
             width: 300,
-            height: 140
+            height: 340
         }
 	};
 	theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);

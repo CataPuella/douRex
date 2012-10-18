@@ -26,8 +26,8 @@ a:hover{opacity:0.8}
 #channels .channel_selected{background-color:#3B5345;color:#fff}
 #close_c{position:fixed;right:15px;top:5px;width:15px;opacity:0.5}
 #close_c:hover{opacity:1.0}
-.comment_button{float:right;width:16px;height:16px;opacity:0.3;margin-right:5px;margin-top:4px}
-.comment_button:hover{opacity:1.0}
+#share_wrap img{float:right;width:16px;height:16px;opacity:0.3;margin-right:5px;margin-top:4px}
+#share_wrap img:hover{opacity:1.0}
 .lyric_button{width:20px;height:15px;}
 .lyric_button:hover{opacity:0.8}
 #notify{width:80px;height:30px;background-color:#3B5343;opacity:0.8;position:absolute;z-index:10000;left:0;top:0}
@@ -36,3 +36,30 @@ a:hover{opacity:0.8}
 #range{width:50px;height:4px;}
 #volume_bar{width:25px;height:4px;background-color:#3B5343;top:68px;left:19px;border-radius:2px;z-index:-1;position:absolute;}
 #volume{margin-top:5px;width:150px;float:left}
+ .channel-tab {
+    list-style: none;
+    display: block;
+    overflow: auto;
+    padding: 0px;
+    margin: 0px;
+  }
+  .on {
+    background-color: #eeeff3;
+  }
+  .channel-tab li {
+    display: list-item;
+    float: left;
+    margin: 0 5px 0 0;
+    padding: 2px 8px;
+    color: #565656;
+    border-top: 1px solid #a6a6a6;
+    border-left: 1px solid #a6a6a6;
+    border-right: 1px solid #a6a6a6;
+    border-top-left-radius:     0.5em 0.5em;
+    border-top-right-radius:    0.5em 0.5em;
+  }
+  .channel-box {
+    padding: 5px 10px;
+    background-color: #eeeff3;
+  }
+

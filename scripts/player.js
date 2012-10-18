@@ -1,4 +1,4 @@
-var radio=opera.extension.bgProcess.radio
+var radio = opera.extension.bgProcess.radio;
 console.log(radio.channel);
 
 function showSong () {
@@ -92,58 +92,71 @@ $("#delete").bind("click", function () {
 	return false;
 });
 
-$("#fanfou").bind("click", function () {
+// largely from <http://img3.douban.com/js/radio/packed_fm_share8987254155.js>
+var share_sites = {
+    douban: {
+        label: "豆瓣",
+        method: function (content, page) {
+	var d=document, 
+        e=encodeURIComponent, 
+        s1=window.getSelection, 
+        s2=d.getSelection, 
+        s3=d.selection, 
+        s=s1?s1():s2?s2():s3?s3.createRange().text:'', 
+        r='http://www.douban.com/recommend/?url='+e(page)+'&title='+e(content)+'&sel='+e("#豆瓣电台#")+'&v=1', 
+        x=function () {
+            if (!window.open(r, 'douban', 'toolbar=0, resizable=1, scrollbars=yes, status=1, width=450, height=330'))
+                location.href=r+'&r=1'};
+    if (/Firefox/.test(navigator.userAgent)) {setTimeout(x, 0)}
+    else{x()}
+        }
+    },
+    fanfou: {
+        label: "饭否",
+        method: function (content, page) {
+	var d=document,
+        w=window,  
+        f='http://fanfou.com/share',
+        l=d.location,
+        e=encodeURIComponent,
+        p='?u='+e(page)+'&t='+e(content)+'&d='+e("#豆瓣电台#")+'&s=bm';
+	    a=function () {
+            if (!w.open(f+'r'+p, 'sharer', 'toolbar=0, status=0, resizable=0, width=600, height=400'))
+                l.href=f+'.new'+p
+        };
+	if (/Firefox/.test(navigator.userAgent))setTimeout(a, 0);
+    else{a()}void(0)
+        }
+    },
+    sina: {
+        label: "新浪微博",
+        method: function (content, page) {
+    void((function (s, d, e, r, l, p, t, z, c) {
+        var f='http://v.t.sina.com.cn/share/share.php?appkey=3672978985', u=z||d.location, p=['&url=', e(u), '&title=', e(t||d.title), '&source=', e(r), '&sourceUrl=', e(l), '&content=', c||'gb2312', '&pic=', e(p||'')].join('');
+        function a() {
+            if (!window.open([f, p].join(''), 'mb', ['toolbar=0, status=0, resizable=1, width=440, height=430, left=', (s.width-440)/2, ', top=', (s.height-430)/2].join('')))
+                u.href=[f, p].join('');
+        };
+        if (/Firefox/.test(navigator.userAgent))setTimeout(a, 0);else a();
+    })(screen, document, encodeURIComponent, '', '', radio.c_song.picture, content, page, 'utf-8'));
+        }
+    }
+};
+
+$("#share_wrap img").bind("click", function (e) {
+    var content,
+        page;
 	if (!radio.power)
 		return false;
-	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title");
+	content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title");
 	if (radio.channel == 26) {
-		var page=radio.c_song.album;
+		page=radio.c_song.album;
     } else {
-		var page="http://music.douban.com"+radio.c_song.album;
+		page="http://music.douban.com"+radio.c_song.album;
     }
-
-	var d=document,  w=window,  f='http://fanfou.com/share',  l=d.location,  e=encodeURIComponent,  p='?u='+e(page)+'&t='+e(content)+'&d='+e("#豆瓣电台#")+'&s=bm';
-	a=function () {
-		if (!w.open(f+'r'+p, 'sharer', 'toolbar=0, status=0, resizable=0, width=600, height=400'))
-			l.href=f+'.new'+p
-	};
-	if (/Firefox/.test(navigator.userAgent))setTimeout(a, 0);else{a()}void(0)
-});
-
-$("#douban").bind("click", function () {
-	if (!radio.power)
-		return false;
-	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title");
-	if (radio.channel == 26) {
-		var page=radio.c_song.album;
-    } else {
-		var page="http://music.douban.com"+radio.c_song.album;
-    }
-	
-	var d=document, e=encodeURIComponent, s1=window.getSelection, s2=d.getSelection, s3=d.selection, s=s1?s1():s2?s2():s3?s3.createRange().text:'', r='http://www.douban.com/recommend/?url='+e(page)+'&title='+e(content)+'&sel='+e("#豆瓣电台#")+'&v=1', x=function () {
-	if (!window.open(r, 'douban', 'toolbar=0, resizable=1, scrollbars=yes, status=1, width=450, height=330'))
-		location.href=r+'&r=1'};if (/Firefox/.test(navigator.userAgent)) {setTimeout(x, 0)}
-	else{x()}
-});
-
-$("#sina").bind("click", function () {
-	if (!radio.power)
-		return false
-	var content=$("#song_artist").attr("title")+"--"+$("#song_title").attr("title")
-	if (radio.channel == 26)
-		var page=radio.c_song.album
-	else
-		var page="http://music.douban.com"+radio.c_song.album
-
-void((function (s, d, e, r, l, p, t, z, c) {
-	var f='http://v.t.sina.com.cn/share/share.php?appkey=3672978985', u=z||d.location, p=['&url=', e(u), '&title=', e(t||d.title), '&source=', e(r), '&sourceUrl=', e(l), '&content=', c||'gb2312', '&pic=', e(p||'')].join('');
-	function a() {
-		if (!window.open([f, p].join(''), 'mb', ['toolbar=0, status=0, resizable=1, width=440, height=430, left=', (s.width-440)/2, ', top=', (s.height-430)/2].join('')))
-			u.href=[f, p].join('');
-	};
-	if (/Firefox/.test(navigator.userAgent))setTimeout(a, 0);else a();
-	})(screen, document, encodeURIComponent, '', '', radio.c_song.picture, content, page, 'utf-8'));
-
+    var t = $(e.currentTarget).attr("class").replace("s-", ""),
+        s = share_sites[t];
+    s.method(content, page);
 });
 
 $("#range")[0].addEventListener("input", function () {
@@ -171,7 +184,7 @@ $("#switcher").bind("click", function () {
 		.siblings().removeClass("channel_selected");
 })
 
-$("#channels li").bind("click", function () {
+$(".channel-box li").bind("click", function () {
 	var sc=$(this).attr("id");
 	localStorage["channel"]=sc;
 	radio.channel=sc;

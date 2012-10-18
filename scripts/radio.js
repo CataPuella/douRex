@@ -37,6 +37,53 @@ Radio.init = function (audio) {
 			})
 		}/
 	})*/
+    // fetch DJ channels
+    var url = "http://douban.fm/",
+        data,
+        success,
+        dataType;
+    /*
+    var jqxhr = $.ajax({
+        url: url,
+        data: data,
+        success: success,
+        dataType: dataType
+    })*/
+    var jqxhr = $.get("http://douban.fm/", data)
+        .complete(function (data) {
+        //.success(function (data) {
+            //data = this.responseText;
+            //$('body').append(data);
+            //console.log("comp");
+            //console.log(data);
+        })
+        .success(function (data) {
+            //data = this.responseText;
+            $('body').append(data);
+        })
+    /* 
+    $.get('http://douban.fm/', function(data) {
+        $.ajaxSetup({async:false});
+	    var div = document.createElement('div');
+        div.innerHTML = data;
+        document.body.appendChild(div);
+        $('#fm-player').remove();
+        sec = $("#fast_songs_sec");
+        items = $("#fast_songs_sec li");
+        len = $("#fast_songs_sec li").length;
+        console.log(items.length);
+        console.log(len);
+        console.log(sec.attr("id"));
+    });*/
+    /*
+    (function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://douban.fm/", false);
+        xhr.send(null);
+
+        
+    }()); 
+    */
 	console.log("init radio...");
 	return radio;
 };
@@ -133,6 +180,11 @@ Radio.prototype.del = function () {
 Radio.prototype.powerOn = function () {
 	this.power = true;
 	this.getPlayList("n", true);
+    sec = $("#fast_songs_sec");
+    items = $("#fast_songs_sec li");
+    len = $("#fast_songs_sec li").length;
+    console.log(items.length);
+    console.log(len);
 };
 
 Radio.prototype.powerOff = function () {
