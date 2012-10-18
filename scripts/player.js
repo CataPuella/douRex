@@ -177,20 +177,21 @@ $("#volume img").toggle(function () {
 })
 
 $("#switcher").bind("click", function () {
-	$("#channel_popup").fadeIn("slow");
+	$("#channel_popup").fadeIn("normal");
 	var sc=localStorage.channel ? localStorage.channel : "0";
 	var c=$("#"+sc);
 	$("#"+sc).addClass("channel_selected")
 		.siblings().removeClass("channel_selected");
 })
 
-$(".channel-box li").bind("click", function () {
-	var sc=$(this).attr("id");
+$(".channel-box li").live("click", function () {
+	//var sc=$(this).attr("id");
+	var sc=$(this).data("cid");
 	localStorage["channel"]=sc;
 	radio.channel=sc;
 	$(this).addClass("channel_selected")
 		.siblings().removeClass("channel_selected");
-	$("#channel_popup").fadeOut("slow")
+	$("#channel_popup").fadeOut("normal")
 	if (radio.power == true) {
 		radio.powerOn();
 		showSong();

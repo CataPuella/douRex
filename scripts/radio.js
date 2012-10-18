@@ -42,25 +42,26 @@ Radio.init = function (audio) {
         data,
         success,
         dataType;
+    $.get('http://douban.fm/', function(data) {
+        $('body').append(data);
+    });
     /*
-    var jqxhr = $.ajax({
-        url: url,
-        data: data,
-        success: success,
-        dataType: dataType
-    })*/
     var jqxhr = $.get("http://douban.fm/", data)
         .complete(function (data) {
-        //.success(function (data) {
-            //data = this.responseText;
-            //$('body').append(data);
-            //console.log("comp");
-            //console.log(data);
         })
         .success(function (data) {
             //data = this.responseText;
             $('body').append(data);
         })
+        .complete(function (data) {
+        })
+    var jqxhr = $.ajax({
+        url: url,
+        data: data,
+        success: success,
+        dataType: dataType
+    })
+        */
     /* 
     $.get('http://douban.fm/', function(data) {
         $.ajaxSetup({async:false});
@@ -180,11 +181,47 @@ Radio.prototype.del = function () {
 Radio.prototype.powerOn = function () {
 	this.power = true;
 	this.getPlayList("n", true);
+    var data;
     sec = $("#fast_songs_sec");
-    items = $("#fast_songs_sec li");
-    len = $("#fast_songs_sec li").length;
-    console.log(items.length);
+    var intro_channels = [];
+    var fast_channels = [];
+    $("#ss-intros .ss-intro").each(function (index, domEle) {
+        var c = {};
+        $title = $(domEle).find('h3');
+        $tips = $(domEle).find('p');
+        c.cid = $title.find('em').data('cid');
+        c.name = $title.find('span').text();
+        c.intro = $tips.text();
+        intro_channels.push(c);
+    });
+    $("#fast_songs_sec li").each(function (index, domEle) {
+        //console.log($(domEle).data('cid'));
+        var c = {};
+        $title = $(domEle).find('div.cont > h4.title');
+        $meta = $(domEle).find('div.meta');
+        $tips = $(domEle).find('div.hidetips');
+        c.cid = $title.find('em').data('cid');
+        c.name = $title.find('span').text();
+        c.intro = $tips.text();
+        fast_channels.push(c);
+
+    });
+    localStorage.intro_channels = JSON.stringify(intro_channels);
+    localStorage.fast_channels = JSON.stringify(fast_channels);
+    len = $("#fast_songs_sec .title").length;
     console.log(len);
+    $("#fast_songs_sec .title").each(function (index, domEle) {
+        //span = $(domEle).children()[0];
+        //console.log(span.text());
+        //console.log($(domEle).find('span').text());
+        //console.log($(domEle).find('em').text());
+        var c = {};
+        c.cid = $(domEle).find('em').data('cid');
+        c.name = $(domEle).find('span').text();
+        //channels.push(c);
+        //console.log($(domEle).find('span').text(),
+        //            $(domEle).find('em').data('cid'));
+    });
 };
 
 Radio.prototype.powerOff = function () {
