@@ -89,4 +89,10 @@ a:hover{opacity:0.8}
     background: url("../img/rated.png") no-repeat right top;
     z-index: 9999;
   }
+  .del-recent-channel {
+    float: right;
+    height: 20px;
+    background: url("../img/rated.png") no-repeat right top;
+    z-index: 9999;
+  }
 
