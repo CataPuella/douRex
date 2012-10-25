@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
         icon: "img/icon_16.png",
         popup: {
             href: "popup.html",
-            width: 300,
+            width: 340,
             height: 340
         }
 	};

@@ -20,9 +20,9 @@ a:hover{opacity:0.8}
 .button:hover{opacity:0.7}
 .clear{clear:both}
 #channel_popup{background-color:#fff;height:100%;width:100%;overflow-x:auto;overflow-y:scroll;position:absolute;z-index:999;left:0;top:0;padding:0px;opacity:0.95;display:none}
-#channels{list-style-type:none;list-style-position:outside;padding:0;text-align:center;margin-top:10px}
-#channels li{background-color:#fafafa;opacity:0.95;margin-bottom:5px;width:100px;margin-left:15px;float:left;color:#3B5343}
-#channels li:hover{cursor:pointer;background-color:#3B5343;color:#fff}
+#channel_douban ul{list-style-type:none;list-style-position:outside;padding:0;text-align:center;margin-top:10px}
+#channel_douban li{background-color:#000000;opacity:0.95;margin-bottom:5px;width:100px;margin-left:5px;float:left;color:#3B5343}
+#channel_douban li:hover{cursor:pointer;background-color:#3B5343;color:#fff}
 #channels .channel_selected{background-color:#3B5345;color:#fff}
 #close_c{position:fixed;right:15px;top:5px;width:15px;opacity:0.5}
 #close_c:hover{opacity:1.0}
@@ -36,34 +36,57 @@ a:hover{opacity:0.8}
 #range{width:50px;height:4px;}
 #volume_bar{width:25px;height:4px;background-color:#3B5343;top:68px;left:19px;border-radius:2px;z-index:-1;position:absolute;}
 #volume{margin-top:5px;width:150px;float:left}
- .channel-tab {
+  .on {
+    background-color: #ffffff;
+  }
+  .chls-tab {
+    1background-color: #9dd6c5;
     list-style: none;
     display: block;
     overflow: auto;
     padding: 0px;
     margin: 0px;
   }
-  .on {
-    background-color: #eeeff3;
-  }
-  .channel-tab li {
+  .chls-tab li {
+    font-size: 12px;
     display: list-item;
     float: left;
-    margin: 0 5px 0 0;
+    margin: 0 2px;
     padding: 2px 8px;
     color: #565656;
     border-top: 1px solid #a6a6a6;
     border-left: 1px solid #a6a6a6;
     border-right: 1px solid #a6a6a6;
-    border-top-left-radius:     0.5em 0.5em;
-    border-top-right-radius:    0.5em 0.5em;
     background-image: url("img/unrated.png");
+    background-color: #d5f4ec;
     repeat: no-repeat;
     background-position: right;
   }
   .channel-box {
     padding: 5px 10px;
-    background-color: #eeeff3;
+    background-color: #ffffff;
+  }
+  [class^="channel"] {
+    font-size: 12px;
+    border-bottom: 1px dashed #DDDDDD;
+    list-style: none;
+    margin: 5px 0;
+  }
+  .banner-channel {
+    width: 45px;
+    height: 45px;
+  }
+  h4 {
+    margin: 0;
+  }
+  .title {
+    1display: inline;
+    float: right;
+    width: 240px;
+  }
+  .intro {
+    height: 30px;
+    overflow: hidden;
   }
   #channel_box li {
     background-image: url("img/unrated.png");
@@ -71,28 +94,28 @@ a:hover{opacity:0.8}
     background-position: right;
   }
   #channel_douban li {
-    width: 150px;
+    width: 130px;
     background: url(img/unrated.png) no-repeat right top;
   }
   #channel_dj a {
-    background: url(img/unrated.png) no-repeat right top;
+    background: url(img/gray-heart.gif) no-repeat right top;
   }
   .rate-channel {
     float: right;
-    height: 20px;
-    background: url("../img/unrated.png") no-repeat right top;
+    height: 14px;
+    background: url("../img/gray-heart.gif") no-repeat right top;
     z-index: 9999;
   }
   .unrate-channel {
     float: right;
-    height: 20px;
-    background: url("../img/rated.png") no-repeat right top;
+    height: 14px;
+    background: url("../img/red-heart.gif") no-repeat right top;
     z-index: 9999;
   }
   .del-recent-channel {
     float: right;
     height: 20px;
-    background: url("../img/rated.png") no-repeat right top;
+    background: url("../img/red-heart.gif") no-repeat right top;
     z-index: 9999;
   }
 
