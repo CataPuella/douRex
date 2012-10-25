@@ -1,18 +1,18 @@
 body{margin:0}
 span{font-family: "WenQuanYi Zen Hei", "sans-serif";}
 a:hover{opacity:0.8}
-#main{width:280px;padding:7px 4px 7px 4px;height:120px;overflow:hidden;}
+#main{width:320px;padding:7px 4px 7px 4px;height:420px;overflow:hidden;}
 #power {float:right;width:20px;margin-top:8px;clear:both}
 #power:hover{opacity:0.7}
 #song_title a{white-space:nowrap;font-size:12px;color:#3B5343;display:inline-block;overflow:hidden;line-height:15px;margin-bottom:1px;text-decoration:none}
 #song_artist {white-space:nowrap;font-size:15px;color:#3B5343;font-weight:bold;display:inline-block;overflow:hidden;width:238px;line-height:18px}
-#display{margin-top:5px;width:240px;}
-#loaded{height:3px;background-color:#E9F4E9;width:240px;opacity:0.8;margin-top:2px}
+#display{margin-top:5px;width:320px;}
+#loaded{height:3px;background-color:#E9F4E9;width:320px;opacity:0.8;margin-top:2px}
 #played{height:3px;background-color:#3B5343;width:0px;opacity:0.8}
 #timer{margin-top:3px;font-size:10px;color:#777;float:right;display:block;vertical-align:middle;line-height:13px}
 #switcher{width:20px;float:right;margin-top:4px;clear:both}
 #switcher:hover{opacity:0.7}
-#wrapper{height:40px;margin-top:20px;width:280px}
+#wrapper{height:40px;margin-top:20px;width:320px}
 #pause {float:right;width:20px;height:18px;clear:both}
 #pause:hover{opacity:0.7}
 #operation{width:120px;float:left}
@@ -36,6 +36,9 @@ a:hover{opacity:0.8}
 #range{width:50px;height:4px;}
 #volume_bar{width:25px;height:4px;background-color:#3B5343;top:68px;left:19px;border-radius:2px;z-index:-1;position:absolute;}
 #volume{margin-top:5px;width:150px;float:left}
+#cover_wrap {
+  margin: 20px 0 50px;
+}
   .on {
     background-color: #ffffff;
   }

@@ -35,6 +35,8 @@ function showSong () {
 	data = radio.c_song;
     site = /site/;
 	page = "http://music.douban.com" + data.album;
+    cover = data.picture;
+    cover = cover.replace('mpic', 'lpic');
 	if (data&&data.like == 1) {
 		$("#like").attr("src", "img/rated.png");
 	} else {
@@ -42,8 +44,9 @@ function showSong () {
 	}
 	if (radio.power == true) {
 		$("#power").attr("src", "img/off.png");
+        $("#cover").attr("src", cover);
 		$("#pause").show();
-		$("#search_lrc").show();
+		$("#search_lrc").hide();
 	} else {
 		$("#power").attr("src", "img/on.png");
 		$("#pause").hide();
@@ -53,8 +56,10 @@ function showSong () {
 	if (data.title) {
         if (site.test(data.album)) {
 			$("#song_title").html("<a href='"+data.album+"'>"+data.title+"</a>");
+            $("#cover").wrap("<a href='"+data.album+"'></a>");
         } else {
 			$("#song_title").html("<a href='"+page+"'>"+data.title+"</a>");
+            $("#cover").wrap("<a href='"+page+"'></a>");
         }
 		$("#song_title").attr("title", data.title);
 		$("#song_artist").html(data.artist);
@@ -259,7 +264,7 @@ radio.jaudio.bind($.jPlayer.event.timeupdate+'.douRex', function (event) {
 	//var t=(this.currentTime/this.duration)*230
 	var current = radio.jaudio.data("jPlayer").status.currentTime;
 	var total = radio.jaudio.data("jPlayer").status.duration;
-	var t = (current/total) * 240;
+	var t = (current/total) * 320;
 	$("#played").css("width", t+"px");
 	var min = 0;
 	var second = 0;
