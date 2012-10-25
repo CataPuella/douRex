@@ -1,44 +1,57 @@
 $(document).ready(function() {
     $('.channel-box > div').eq(0).show();
-var intro_channels = JSON.parse(localStorage.intro_channels);
-var fast_channels = JSON.parse(localStorage.fast_channels);
-for (c in intro_channels) {
-    cid = intro_channels[c].cid;
-    name = intro_channels[c].name;
-    intro = intro_channels[c].intro;
-    $('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#ss_intros');
-}
+    console.log(radio.search_keywords);
+    $('#channel_search input').val(radio.search_keywords);
+    var hot_channels = radio.hot_channels,
+        up_trending_channels = radio.up_trending_channels,
+        intro_channels = radio.promotion_channels,
+        recent_channels = radio.recent_channels;
+        search_channels = radio.search_channels;
 
-for (c in fast_channels) {
-    //console.log(channels[c].cid, channels[c].name);
-    cid = fast_channels[c].cid;
-    name = fast_channels[c].name;
-    intro = fast_channels[c].intro;
-    $('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#fast_songs_sec');
-}
-$('<button class="rate-channel" title="rate"/>').appendTo('li.channel');
-
-if (localStorage.fav_channels !== 'undefined') {
-    var fav_channels = JSON.parse(localStorage.fav_channels);
-    for (c in fav_channels) {
-        cid = fav_channels[c].cid;
-        name = fav_channels[c].name;
-        intro = fav_channels[c].intro;
-        $('<li data-cid=' + cid + ' class="channel-fav"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#channel_fav');
+    for (c in hot_channels) {
+        cid = hot_channels[c].cid;
+        name = hot_channels[c].name;
+        intro = hot_channels[c].intro;
+        $('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#ss_intros');
     }
-    $('<button class="unrate-channel" title="unrate"/>').appendTo('li.channel-fav');
-}
 
-if (localStorage.recent_channels !== 'undefined') {
-    var recent_channels = JSON.parse(localStorage.recent_channels);
+//console.log(recent_channels.length);
+    for (c in up_trending_channels) {
+        //console.log(channels[c].cid, channels[c].name);
+        cid = up_trending_channels[c].id;
+        name = up_trending_channels[c].name;
+        intro = up_trending_channels[c].intro;
+        $('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#fast_songs_sec');
+    }
+    $('<button class="rate-channel" title="rate"/>').appendTo('li.channel');
+
     for (c in recent_channels) {
         cid = recent_channels[c].cid;
         name = recent_channels[c].name;
         intro = recent_channels[c].intro;
         $('<li data-cid=' + cid + ' class="channel-recent"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#channel_recent');
     }
-    $('<button class="del-recent-channel" title="unrate"/>').appendTo('li.channel-recent');
-}
+    $('<button class="rate-channel" title="unrate"/>').appendTo('li.channel-recent');
+
+    for (c in search_channels) {
+        cid = search_channels[c].cid;
+        name = search_channels[c].name;
+        intro = search_channels[c].intro;
+        $('<li data-cid=' + cid + ' class="channel-search"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#channel_search_result');
+    }
+    $('<button class="del-recent-channel" title="unrate"/>').appendTo('li.channel-search');
+
+    if (localStorage.fav_channels !== undefined) {
+        var fav_channels = JSON.parse(localStorage.fav_channels);
+        for (c in fav_channels) {
+            cid = fav_channels[c].cid;
+            name = fav_channels[c].name;
+            intro = fav_channels[c].intro;
+            $('<li data-cid=' + cid + ' class="channel-fav"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#channel_fav');
+        }
+        $('<button class="unrate-channel" title="unrate"/>').appendTo('li.channel-fav');
+    }
+
 });
 
 $('.channel-tab > li').click(function() {
@@ -54,7 +67,7 @@ $('.rate-channel').live("click", function (e) {
     c.intro = $channel.find("a").attr("title");
     //console.log(channel.data("cid"), channel.text(), channel.find("a").attr("title"));
     var fav_channels = [];
-if ( typeof localStorage.fav_channels !== 'undefined') {
+if (localStorage.fav_channels !== undefined) {
     fav_channels = JSON.parse(localStorage.fav_channels);
 }
 //console.log(fav_channels.indexOf(c));
@@ -92,6 +105,8 @@ $('.unrate-channel').live("click", function (e) {
     localStorage.fav_channels = JSON.stringify(fav_channels);
     e.stopPropagation();
 });
+
+// current unfunctioning
 $('.del-recent-channel').live("click", function (e) {
     $channel = $(this).parent();
     var c = {};
@@ -107,9 +122,28 @@ $('.del-recent-channel').live("click", function (e) {
         }
     }
 
-    //recent_channels.pop(c)
-    localStorage.recent_channels = JSON.stringify(recent_channels);
     e.stopPropagation();
+});
+
+$('#channel_search input').keypress(function(event) {
+    var keywords = this.value
+    if (event.keyCode == 13) {
+        $.getJSON("http://douban.fm/j/explore/search", {
+            query: keywords
+        }, function (data) {
+            channels = data.data.channels;
+            console.log(channels);
+            $('div#channel_search_result').html('')
+            for (c in channels) {
+                cid = channels[c].id;
+                name = channels[c].name;
+                intro = channels[c].intro;
+                $('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#channel_search_result');
+            }
+            radio.search_keywords = keywords;
+            radio.search_channels = channels;
+        });
+    }
 });
 //    console.log(channels[i].cid, channels[i].name);
 //console.log(channels[0].cid, channels[0].name);

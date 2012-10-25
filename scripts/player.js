@@ -26,6 +26,7 @@ Object.identical = function (a, b, sortArrays) {
 
 var radio = opera.extension.bgProcess.radio;
 console.log(radio.channel);
+//console.log(radio.recent_channels.length);
 
 function showSong () {
     var data, 
@@ -226,19 +227,11 @@ $(".channel-box li").live("click", function () {
     c.cid = $(this).data("cid");
     c.name = $(this).text();
     c.intro = $(this).find("a").attr("title");
-    var recent_channels = [];
-    if (localStorage.recent_channels !== 'undefined') {
-        recent_channels = JSON.parse(localStorage.recent_channels);
-        var i=recent_channels.length
-        while (i--) {
-            if (Object.identical(recent_channels[i], c)) {
-                recent_channels.splice(i, 1);
-            }
-        }
-    }
+    $.getJSON("http://douban.fm/j/explore/recent_chls", 
+      function (data) {
+        radio.recent_channels = data.data.chls;
+    });
     console.log(c.name);
-    recent_channels.push(c);
-    localStorage.recent_channels = JSON.stringify(recent_channels);
 })
 
 $("#close_c").bind("click", function () {

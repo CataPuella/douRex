@@ -11,6 +11,12 @@ var Radio = function () {
 	this.uid = '';
 	this.heared = '';
 	this.context = '';
+    this.promotion_channels = [];
+    this.recent_channels = [];
+    this.hot_channels = [];
+    this.up_trending_channels = [];
+    this.search_keywords = '';
+    this.search_channels = [];
 };
 
 /**
@@ -23,7 +29,12 @@ Radio.init = function (audio) {
 	//radio.audio = audio;  // maybe html5 in opera will support mp3 later
 	radio.jaudio = audio;
     radio.jaudio.volume = localStorage.volume ? localStorage.volume : 0.8;
-	radio.channel = localStorage.channel ? localStorage.channel : 0;
+    if (localStorage.channel === 'undefined' || localStorage.channel === undefined) {
+        localStorage.channel = 0;       
+    }
+    radio.channel = localStorage.channel;
+    
+	//radio.channel = localStorage.channel == undefined ? localStorage.channel : 0;
 	//douban.fm的cookie是session级别，从豆瓣主站获取dbcl2的cookie到
 	/*chrome.cookies.get({
 		url:"http://douban.com",
@@ -42,49 +53,10 @@ Radio.init = function (audio) {
         data,
         success,
         dataType;
+    /*
     $.get('http://douban.fm/', function(data) {
         $('body').append(data);
-    });
-    /*
-    var jqxhr = $.get("http://douban.fm/", data)
-        .complete(function (data) {
-        })
-        .success(function (data) {
-            //data = this.responseText;
-            $('body').append(data);
-        })
-        .complete(function (data) {
-        })
-    var jqxhr = $.ajax({
-        url: url,
-        data: data,
-        success: success,
-        dataType: dataType
-    })
-        */
-    /* 
-    $.get('http://douban.fm/', function(data) {
-        $.ajaxSetup({async:false});
-	    var div = document.createElement('div');
-        div.innerHTML = data;
-        document.body.appendChild(div);
-        $('#fm-player').remove();
-        sec = $("#fast_songs_sec");
-        items = $("#fast_songs_sec li");
-        len = $("#fast_songs_sec li").length;
-        console.log(items.length);
-        console.log(len);
-        console.log(sec.attr("id"));
     });*/
-    /*
-    (function () {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "http://douban.fm/", false);
-        xhr.send(null);
-
-        
-    }()); 
-    */
 	console.log("init radio...");
 	return radio;
 };
@@ -107,6 +79,10 @@ Radio.prototype.getPlayList = function (t, skip) {
         uid: this.uid,
         from: "mainsite"
     }, function (data) {
+        if (data.err) {
+            console.log(data.err);
+            return;
+        }
         var songs = data.song,
             s;
         for (s in songs) {
@@ -116,7 +92,37 @@ Radio.prototype.getPlayList = function (t, skip) {
             self.changeSong(t);
         }
     });
+};
 
+/**
+ * retrieve promotion_chls, recent_chls, hot_channels, up_trending_channels
+ * NOTES: there are two fields name: _chls_ & _channels_
+ **/
+Radio.prototype.getUpTrendingChannels = function () {
+    var self = this;
+    $.getJSON("http://douban.fm/j/explore/promotion_chls", 
+      function (data) {
+        self.promotion_channels = data.data.chls;
+    });
+    /*
+    console.log("length: ", self.promotion_chls.length)
+    for (c in self.promotion_chls) {
+        console.log(self.promotion_chls[c].name);
+    }*/
+    $.getJSON("http://douban.fm/j/explore/recent_chls", 
+      function (data) {
+        self.recent_channels = data.data.chls;
+    });
+    $.getJSON("http://douban.fm/j/explore/hot_channels", 
+      function (data) {
+        self.hot_channels = data.data.channels;
+    });
+    $.getJSON("http://douban.fm/j/explore/up_trending_channels", 
+      function (data) {
+        self.up_trending_channels = data.data.channels;
+    console.log("length: ", data.data.channels.length)
+    });
+    console.log("length: ", self.recent_channels.length)
 };
 
 Radio.prototype.onGetPlayList = function (data) {
@@ -181,47 +187,7 @@ Radio.prototype.del = function () {
 Radio.prototype.powerOn = function () {
 	this.power = true;
 	this.getPlayList("n", true);
-    var data;
-    sec = $("#fast_songs_sec");
-    var intro_channels = [];
-    var fast_channels = [];
-    $("#ss-intros .ss-intro").each(function (index, domEle) {
-        var c = {};
-        $title = $(domEle).find('h3');
-        $tips = $(domEle).find('p');
-        c.cid = $title.find('em').data('cid');
-        c.name = $title.find('span').text();
-        c.intro = $tips.text();
-        intro_channels.push(c);
-    });
-    $("#fast_songs_sec li").each(function (index, domEle) {
-        //console.log($(domEle).data('cid'));
-        var c = {};
-        $title = $(domEle).find('div.cont > h4.title');
-        $meta = $(domEle).find('div.meta');
-        $tips = $(domEle).find('div.hidetips');
-        c.cid = $title.find('em').data('cid');
-        c.name = $title.find('span').text();
-        c.intro = $tips.text();
-        fast_channels.push(c);
-
-    });
-    localStorage.intro_channels = JSON.stringify(intro_channels);
-    localStorage.fast_channels = JSON.stringify(fast_channels);
-    len = $("#fast_songs_sec .title").length;
-    console.log(len);
-    $("#fast_songs_sec .title").each(function (index, domEle) {
-        //span = $(domEle).children()[0];
-        //console.log(span.text());
-        //console.log($(domEle).find('span').text());
-        //console.log($(domEle).find('em').text());
-        var c = {};
-        c.cid = $(domEle).find('em').data('cid');
-        c.name = $(domEle).find('span').text();
-        //channels.push(c);
-        //console.log($(domEle).find('span').text(),
-        //            $(domEle).find('em').data('cid'));
-    });
+    this.getUpTrendingChannels();
 };
 
 Radio.prototype.powerOff = function () {
