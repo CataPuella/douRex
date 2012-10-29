@@ -28,30 +28,36 @@
         </div>
         <div id="navigation">
           <ul>
-            <li><a href="options.html">首选项</a></li>
-            <li><a href="faq.html">FAQ</a></li> 
+            <li><a href="options.html">FAQ</a></li> 
             <li><a href="features.html">功能</a></li>
           </ul>
         </div>
       <a href="https://github.com/rnons/douRex"><img style="position: absolute; top: 0; right: 0; border: 0;" src="img/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
       </div>
       <div id="content">   
-        <fieldset>
-          <legend>首选项</legend>
-          <div id="options">
-            选择皮肤:
-            <select id="skin">
-              <option value=0>Classical 无图版</option>
-              <option value=1 selected>2012 P版</option>
-            </select>
-            提示：修改皮肤需要重启Opera或者重新激活douRex才能生效！
+        <div id="tips">
+          <h3>无法收听?</h3>
+          <p>两种可能：</p>
+          <ol style="list-style-type: decimal">
+          <li>未将widget://设为flash可信路径 
+            <a href="#" id="showFix1">解决办法</a> </li>
+          <div id="fix1" style="display:none">
+              <p>进入<a href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html">flash安全设置页面</a>，Edit locations -> Add location，填入widget://</p>
+              <img src="http://img1.douban.com/view/group_topic/large/public/26074959-4.jpg">
           </div>
-        </fieldset>
+
+          <li>在Opera中选择了按需加载媒体
+            <a href="#" id="showFix2">解决办法</a> </li>
+            <div id="fix2" style="display:none">
+                <p>设置 -> 首选项 -> 高级 -> 内容，不要勾选“按需加载媒体”</p>
+                <p>Settings -> Preferences -> Advanced -> Content，不要勾选"Enable plug-ins only on demand"</p>
+            </div>
+          </ol>
+        </div>
       </div>
       <div id="footer">
         <a href="mailto:remotenonsense@gmail.com">Contact Me</a>
       </div>
     </div>
   </body>
-  <script type="text/javascript" src="scripts/options.js"></script>
 </html>

@@ -36,7 +36,8 @@ function showSong () {
     site = /site/;
 	page = "http://music.douban.com" + data.album;
     cover = data.picture;
-    cover = cover.replace('mpic', 'lpic');
+    // retrieved picture field is low-resolution
+    cover = cover.replace('mpic', 'lpic');  
 	if (data&&data.like == 1) {
 		$("#like").attr("src", "img/rated.png");
 	} else {
