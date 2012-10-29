@@ -3,43 +3,6 @@ $(document).ready(function() {
     $('.chls-tab > li').eq(0).css('background-color', '#ffffff');
     console.log(radio.search_keywords);
     $('#channel_search input').val(radio.search_keywords);
-    var hot_channels = radio.hot_channels,
-        up_trending_channels = radio.up_trending_channels,
-        intro_channels = radio.promotion_channels,
-        recent_channels = radio.recent_channels;
-        search_channels = radio.search_channels;
-
-    for (c in hot_channels) {
-        li = li_helper('channel-hot', hot_channels[c]);
-        $(li).appendTo('div#ss_intros');
-        //$('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#ss_intros');
-    }
-
-    for (c in up_trending_channels) {
-        li = li_helper('channel-trending', up_trending_channels[c]);
-        $(li).appendTo('div#fast_songs_sec');
-        //$('<li data-cid=' + cid + ' class="channel"><a title=' + intro +'>' + name + '</a></li>').appendTo('div#fast_songs_sec');
-    }
-    //$('<img src="../img/gray-heart.gif" class="rate-channel" title="rate"/>').appendTo('li.channel');
-
-    for (c in recent_channels) {
-        li = li_helper('channel-recent', recent_channels[c]);
-        $(li).appendTo('div#channel_recent');
-    }
-
-    for (c in search_channels) {
-        li = li_helper('channel-search', search_channels[c]);
-        $(li).appendTo('div#channel_search_result');
-    }
-
-    if (localStorage.fav_channels !== undefined) {
-        var fav_channels = JSON.parse(localStorage.fav_channels);
-        for (c in fav_channels) {
-            li = li_helper_old('channel-fav', fav_channels[c]);
-            $(li).appendTo('div#channel_fav');
-        }
-    }
-
 });
 
 var li_helper = function (cls, channel) {
@@ -69,11 +32,55 @@ var li_helper_old = function (cls, channel) {
 };
 
 $('.chls-tab > li').click(function() {
-    //$(this).addClass('on').siblings().removeClass('on');
+    var hot_channels = radio.hot_channels,
+        up_trending_channels = radio.up_trending_channels,
+        intro_channels = radio.promotion_channels,
+        recent_channels = radio.recent_channels;
+        search_channels = radio.search_channels;
+    $(this).addClass('on').siblings().removeClass('on');
     $(this).css('backgroundColor', '#ffffff');
     $(this).siblings().css('background-color', '#d5f4ec');
     $(this).siblings().removeClass('on');
     $('.channel-box > div').hide().eq($(this).index()).show();
+    switch ($(this).index()) {
+    case 1:
+        $('div#ss_intros').html('');
+        $('div#fast_songs_sec').html('');
+        for (c in hot_channels) {
+            li = li_helper('channel-hot', hot_channels[c]);
+            $(li).appendTo('div#ss_intros');
+        }
+
+        for (c in up_trending_channels) {
+            li = li_helper('channel-trending', up_trending_channels[c]);
+            $(li).appendTo('div#fast_songs_sec');
+        }
+        break;
+    case 2:
+        $('div#channel_recent').html('');
+        for (c in recent_channels) {
+            li = li_helper('channel-recent', recent_channels[c]);
+            $(li).appendTo('div#channel_recent');
+        }
+        break;
+    case 3:
+        $('div#channel_fav').html('');
+        if (localStorage.fav_channels !== undefined) {
+            var fav_channels = JSON.parse(localStorage.fav_channels);
+            for (c in fav_channels) {
+                li = li_helper_old('channel-fav', fav_channels[c]);
+                $(li).appendTo('div#channel_fav');
+            }
+        }
+        break;
+    case 4:
+        $('div#channel_search_result').html('');
+        for (c in search_channels) {
+            li = li_helper('channel-search', search_channels[c]);
+            $(li).appendTo('div#channel_search_result');
+        }
+        break;
+    }
 });
 
 $('.rate-channel').live("click", function (e) {
@@ -102,8 +109,11 @@ if (localStorage.fav_channels !== undefined) {
         }
     }
     if (flag === 0 ) {
-        fav_channels.push(c)
+        //fav_channels.push(c)
     }
+    console.log($('.on').index());
+    //switch () {
+    //}
     localStorage.fav_channels = JSON.stringify(fav_channels);
     e.stopPropagation();
 });
